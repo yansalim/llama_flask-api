@@ -1,0 +1,15 @@
+
+#dependences
+/venv
+
+#tempfiles
+*.log
+*.tmp
+*.swp
+
+#SO files
+Thumbs.db
+Desktop.ini
+
+#testfiles
+app
