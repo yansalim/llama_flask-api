@@ -1,0 +1,16 @@
+services:
+  llama-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MODEL_DIR=/app/Llama-2-7b-hf
+      - MODEL_URL=https://1drv.ms/u/s!Aff226440d8599fa/EqW0CSAzPQdAsRgJoksultEB7WU1CKXOQLdv4Wn7EcUyDw?e=84YqB2
+    ports:
+      - "8080:8080"
+    volumes:
+      - llama_model_data:/app/Llama-2-7b-hf
+    restart: unless-stopped
+
+volumes:
+  llama_model_data:
