@@ -1,5 +1,5 @@
 # Use python as base image
-FROM python:3.12
+FROM python:3.9-slim-buster
 
 # Set the working directory in the container
 WORKDIR /app
@@ -8,7 +8,8 @@ WORKDIR /app
 COPY . /app
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y wget gcc g++ procps unzip
+RUN apt-get update && apt-get install -y wget gcc g++ procps unzip && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install general Python dependencies
 RUN pip install --no-cache-dir \
@@ -16,15 +17,12 @@ RUN pip install --no-cache-dir \
     Flask \
     llama-cpp-python \
     torch \
-    tensorflow \
+    tensorflow-macos \
+    tensorflow-metal \
     flax \
     sentencepiece \
     huggingface_hub \
     accelerate
-
-# Install NVIDIA-specific dependencies
-RUN pip install --no-cache-dir nvidia-pyindex && \
-    pip install --no-cache-dir nvidia-tensorrt || echo "NVIDIA TensorRT not available for this architecture, skipping installation."
 
 # Expose the port used by the Flask app
 EXPOSE 8080
